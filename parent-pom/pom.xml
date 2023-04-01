@@ -8,6 +8,7 @@
     </parent>
 
     <artifactId>parent-pom</artifactId>
+    <packaging>pom</packaging>
 
     <properties>
         <!-- 构建配置 -->
