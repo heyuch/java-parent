@@ -4,7 +4,7 @@
 
     <groupId>io.github.heyuch</groupId>
     <artifactId>java-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
 
     <name>java-parent</name>
@@ -40,7 +40,7 @@
         <connection>scm:git:ssh://github.com/heyuch/java-parent.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/heyuch/java-parent.git</developerConnection>
         <url>https://github.com/heyuch/java-parent</url>
-      <tag>HEAD</tag>
+      <tag>java-parent-1.0.1</tag>
   </scm>
 
     <distributionManagement>

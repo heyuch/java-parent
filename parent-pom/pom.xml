@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.github.heyuch</groupId>
         <artifactId>java-parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>parent-pom</artifactId>
@@ -37,7 +37,7 @@
         <spotless-maven-plugin.version>2.35.0</spotless-maven-plugin.version>
         <checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
         <rewrite-maven-plugin.version>4.42.0</rewrite-maven-plugin.version>
-        <build-utils.version>1.0.1-SNAPSHOT</build-utils.version>
+        <build-utils.version>1.0.1</build-utils.version>
     </properties>
 
     <build>
