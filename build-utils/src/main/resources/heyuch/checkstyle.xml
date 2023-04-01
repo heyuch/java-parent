@@ -1,0 +1,579 @@
+<?xml version="1.0"?><!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <!-- 检查报错信息使用中文 -->
+    <property name='localeCountry' value='CN'/>
+    <property name='localeLanguage' value='zh'/>
+
+    <!-- 检查报错输出日志级别 -->
+    <property name="severity" value="error"/>
+    <!-- 源码文件编码 -->
+    <property name="charset" value="UTF-8"/>
+    <!-- 需要做检查的文件后缀 -->
+    <property name="fileExtensions" value="java, properties, xml"/>
+    <!-- 一旦遇到一个检查错误就停止执行后续检查-->
+    <property name="haltOnException" value="false"/>
+
+    <!-- 报告重复的属性配置(.properties) -->
+    <module name="UniqueProperties"/>
+    <!-- 限制每个源码文件行数 -->
+    <module name="FileLength">
+        <property name="max" value="2000"/>
+    </module>
+    <!-- 限制 Java 代码每行长度 -->
+    <module name="LineLength">
+        <property name="fileExtensions" value="java"/>
+        <property name="max" value="120"/>
+        <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
+    </module>
+    <!-- 限制不用 tab 缩进 -->
+    <module name="FileTabCharacter"/>
+
+    <module name="TreeWalker">
+
+        <!--region 常规 -->
+
+        <!-- tab 对应的空格数 -->
+        <property name="tabWidth" value="4"/>
+
+        <!--endregion-->
+
+        <!--region 注解 Annotation -->
+
+        <!-- 注解位置 -->
+        <module name="AnnotationLocation">
+            <!-- 只允许每个注解单独写一行 -->
+            <property name="allowSamelineMultipleAnnotations" value="false"/>
+            <property name="allowSamelineSingleParameterlessAnnotation" value="false"/>
+            <property name="allowSamelineParameterizedAnnotation" value="false"/>
+        </module>
+
+        <!--注解使用风格 -->
+        <module name="AnnotationUseStyle">
+            <!-- 如果注解只用一个参数 value，则省略参数名；如果参数是数组类型且只有一个元素，省略数组括号 -->
+            <property name="elementStyle" value="compact_no_array"/>
+            <!-- 如果注解没有参数，省略括号 -->
+            <property name="closingParens" value="never"/>
+            <!-- 如果注解参数是数组，最后一个元素后面不要逗号 -->
+            <property name="trailingArrayComma" value="ignore"/>
+        </module>
+
+        <!-- javadoc 中标注为 @deprecated 的元素，必需要有 @Deprecated 注解；反之亦然 -->
+        <module name="MissingDeprecated"/>
+
+        <!-- javadoc 中标注为 @inheritDoc 的元素，必需要有 @Override 注解 -->
+        <module name="MissingOverride"/>
+
+        <!-- 支持使用 @SuppressWarnings 注解忽略 checkstyle 规则 -->
+        <module name="SuppressWarningsHolder"/>
+
+        <!--endregion-->
+
+        <!--region 语句块 Code Block -->
+
+        <!--
+         | 禁止使用嵌套代码块，例如:
+         |
+         | int whichIsWhich = 0;
+         | {
+         |   whichIsWhich = 2;
+         | }
+        -->
+        <module name="AvoidNestedBlocks"/>
+
+        <!-- 禁止空 try -->
+        <module name="EmptyBlock">
+            <property name="option" value="text"/>
+            <property name="tokens" value="LITERAL_TRY"/>
+        </module>
+
+        <!-- 禁止空 catch，除非显示命名异常变量为 ignore 或写明注释 -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected|ignore"/>
+            <property name="commentFormat" value="忽略异常"/>
+        </module>
+
+        <!-- 检查左大括号位置 -->
+        <!-- 放在同一行最右边 -->
+        <module name="LeftCurly"/>
+
+        <!-- 强制语句块右大括号的位置 -->
+        <!-- 与(else/catch等)在同一行，不另起一行-->
+        <module name="RightCurly"/>
+
+        <!-- 强制括号(if/while/for等) -->
+        <module name="NeedBraces">
+            <!-- 单行语句可省略大括号 -->
+            <property name="allowSingleLineStatement" value="false"/>
+            <!-- 空循环语句可省略大括号 -->
+            <property name="allowEmptyLoopBody" value="false"/>
+        </module>
+
+        <!--endregion C-->
+
+        <!--region 类 Class -->
+
+        <!-- 内部类放置在文件最后-->
+        <module name="InnerTypeLast"/>
+
+        <!-- 接口不能用于专门装常量 -->
+        <module name="InterfaceIsType">
+            <property name="allowMarkerInterfaces" value="true"/>
+        </module>
+
+        <!-- 一个源文件里只应该有一个顶级类 -->
+        <module name="OneTopLevelClass"/>
+
+        <!-- 方法签名中 throws 的异常类数量 -->
+        <module name="ThrowsCount">
+            <property name="max" value="4"/>
+            <!-- 忽略验证 private 方法 -->
+            <property name="ignorePrivateMethods" value="true"/>
+        </module>
+
+        <!-- 可见性修饰符的使用(public/protected/private...)-->
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="true"/>
+            <property name="protectedAllowed" value="true"/>
+            <property name="allowPublicFinalFields" value="true"/>
+            <property name="allowPublicImmutableFields" value="true"/>
+        </module>
+
+        <!--endregion-->
+
+        <!--region 编码 Coding -->
+
+        <!--数组初始化时，最后一个元素需要带上逗号 -->
+        <!--<module name="ArrayTrailingComma"/>-->
+
+        <!-- 禁止双大括号初始语句 -->
+        <module name="AvoidDoubleBraceInitialization"/>
+
+        <!-- 禁止协变的 equals 方法，即除了 Object.equals(Object)，还自己实现了 equals(T)-->
+        <module name="CovariantEquals"/>
+
+        <!-- 类元素定义顺序 -->
+        <module name="DeclarationOrder"/>
+
+        <!-- switch 语句中 default 放在最后 -->
+        <module name="DefaultComesLast"/>
+
+        <!-- 空语句（只有分号）-->
+        <module name="EmptyStatement"/>
+
+        <!-- string 做 equals 时，字符串字面量应该放在左边，避免空指针 -->
+        <module name="EqualsAvoidNull"/>
+
+        <!-- string 必需用 equals 方法做相等比较，而不是 == -->
+        <module name="StringLiteralEquality"/>
+
+        <!-- 需要同时 override equals() 和 hashCode() 方法 -->
+        <module name="EqualsHashCode"/>
+
+        <!-- 变量不能跟类属性字段名称相同 -->
+        <module name="HiddenField">
+            <property name="tokens" value="VARIABLE_DEF"/>
+        </module>
+
+        <!-- 方法签名不能 throws RuntimeException 等异常 -->
+        <module name="IllegalThrows"/>
+
+        <!-- 禁止 label -->
+        <!--<module name="IllegalToken"/>-->
+
+        <!-- 禁止八进制数字字面量-->
+        <module name="IllegalTokenText">
+            <property name="tokens" value="NUM_INT,NUM_LONG"/>
+            <property name="format" value="^0[^lx]"/>
+            <property name="ignoreCase" value="true"/>
+        </module>
+
+        <!--
+         | 禁止在非赋值表达式里做赋值操作
+         |
+         | String s = Integer.toString(i = 2)
+        -->
+        <module name="InnerAssignment"/>
+
+        <!-- switch 必需要有 default -->
+        <module name="MissingSwitchDefault"/>
+
+        <!-- 禁止在 for 循环内部变更循环变量的值 -->
+        <module name="ModifiedControlVariable"/>
+
+        <!-- 禁止在一行语句中声明多个变量 -->
+        <module name="MultipleVariableDeclarations"/>
+
+        <!-- 限制 for 循环嵌套数量 -->
+        <module name="NestedForDepth">
+            <property name="max" value="3"/>
+        </module>
+
+        <!-- 限制 if 嵌套数量 -->
+        <module name="NestedIfDepth">
+            <property name="max" value="3"/>
+        </module>
+
+        <!-- 限制 try 嵌套数量 -->
+        <module name="NestedTryDepth">
+            <property name="max" value="3"/>
+        </module>
+
+        <!-- 禁用 clone 方法 -->
+        <module name="NoClone"/>
+
+        <!-- 禁用 finalize 方法 -->
+        <module name="NoFinalizer"/>
+
+        <!-- 每行只能一条语句 -->
+        <module name="OneStatementPerLine">
+            <property name="treatTryResourcesAsStatement" value="true"/>
+        </module>
+
+        <!-- 必需要有包语句-->
+        <module name="PackageDeclaration"/>
+
+        <!-- 限制方法 return 语句数量-->
+        <!-- <module name="ReturnCount"> -->
+        <!--     <property name="max" value="6"/> -->
+        <!-- </module> -->
+
+        <!-- 简化 bool 表达式 -->
+        <module name="SimplifyBooleanExpression"/>
+
+        <!-- 简化 bool 返回语句 -->
+        <module name="SimplifyBooleanReturn"/>
+
+        <!-- 多余的括号 -->
+        <module name="UnnecessaryParentheses"/>
+
+        <!-- 多余的分号 -->
+        <module name="UnnecessarySemicolonAfterOuterTypeDeclaration"/>
+        <module name="UnnecessarySemicolonAfterTypeMemberDeclaration"/>
+        <module name="UnnecessarySemicolonInTryWithResources"/>
+
+        <!-- 限制变量定义与使用的距离 -->
+        <module name="VariableDeclarationUsageDistance">
+            <property name="allowedDistance" value="3"/>
+            <property name="ignoreFinal" value="false"/>
+            <property name="validateBetweenScopes" value="false"/>
+        </module>
+
+        <!--endregion-->
+
+        <!--region 导入 Imports -->
+
+        <!-- 禁用 import * -->
+        <module name="AvoidStarImport"/>
+
+        <!-- import 顺序 -->
+        <module name="CustomImportOrder">
+            <property name="customImportOrderRules"
+                      value="STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE###STATIC"/>
+            <property name="thirdPartyPackageRegExp" value=".*"/>
+            <property name="separateLineBetweenGroups" value="true"/>
+            <property name="sortImportsInGroupAlphabetically" value="true"/>
+        </module>
+
+        <!-- 禁止重复的 import -->
+        <module name="RedundantImport"/>
+
+        <!-- 禁止未使用的 import -->
+        <module name="UnusedImports"/>
+
+        <!--endregion-->
+
+        <!--region Javadoc -->
+
+        <!-- 强制 Javadoc 标签顺序 -->
+        <module name="AtclauseOrder"/>
+
+        <!-- Javadoc 位置错误 -->
+        <module name="InvalidJavadocPosition"/>
+
+        <!-- Javadoc 标签必需放在句首 -->
+        <module name="JavadocBlockTagLocation">
+            <property name="tags" value="param, return, throws, since, see, deprecated"/>
+        </module>
+
+        <!-- Javadoc 内容位置 -->
+        <module name="JavadocContentLocationCheck">
+            <property name="location" value="second_line"/>
+        </module>
+
+        <!-- 检查方法的 Javadoc -->
+        <module name="JavadocMethod">
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+            <property name="validateThrows" value="false"/>
+        </module>
+
+        <!-- Javadoc 每行必需有 * 开头 -->
+        <module name="JavadocMissingLeadingAsterisk"/>
+
+        <!-- Javadoc 每行 * 开头后必需有空格 -->
+        <module name="JavadocMissingWhitespaceAfterAsterisk"/>
+
+        <!-- 检查类的 Javadoc -->
+        <module name="JavadocType">
+            <property name="allowMissingParamTags" value="true"/>
+        </module>
+
+        <!-- 检查类属性的 Javadoc -->
+        <!--<module name="JavadocVariable">-->
+        <!-- public 属性需要写 Javadoc -->
+        <!--<property name="scope" value="public"/>-->
+        <!--</module>-->
+
+        <!-- Javadoc 标签内容不能为空 -->
+        <module name="NonEmptyAtclauseDescription"/>
+
+        <!-- Javadoc 内容与标签之间需要有空行 -->
+        <!-- !!目前与 eclipse formatter 不能兼容!! -->
+        <!--<module name="RequireEmptyLineBeforeBlockTagGroup"/>-->
+
+        <!-- 有标签的 Javadoc 不能写成单行 -->
+        <module name="SingleLineJavadoc"/>
+
+        <!-- Javadoc 内容不能为空 -->
+        <module name="SummaryJavadocCheck">
+            <property name="period" value=""/>
+        </module>
+
+        <!--endregion-->
+
+        <!--region 代码复杂度 Metrics -->
+
+        <!-- 限制 bool 表达式复杂度 -->
+        <module name="BooleanExpressionComplexity">
+            <property name="max" value="5"/>
+        </module>
+
+        <!-- 限制方法代码行数(Non Commenting Source Statements) -->
+        <module name="JavaNCSS">
+            <property name="methodMaximum" value="100"/>
+            <property name="classMaximum" value="1500"/>
+            <property name="fileMaximum" value="2000"/>
+            <property name="recordMaximum" value="150"/>
+        </module>
+
+        <!-- 限制方法循环复杂度 -->
+        <module name="CyclomaticComplexity">
+            <property name="max" value="20"/>
+        </module>
+
+        <module name="NPathComplexity">
+            <property name="max" value="200"/>
+        </module>
+
+        <!--endregion-->
+
+        <!--region 杂项 Miscellaneous -->
+
+        <!-- 强制 Java 风格数组 String[] -->
+        <module name="ArrayTypeStyle"/>
+
+        <!-- 尽可能不要使用转义的 unicode 字符（为了可读性） -->
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowEscapesForControlCharacters" value="true"/>
+        </module>
+
+        <!-- 注释的缩进应该与代码保持一致 -->
+        <module name="CommentsIndentation"/>
+
+        <!-- 缩进 -->
+        <module name="Indentation">
+            <property name="basicOffset" value="4"/>
+            <property name="caseIndent" value="4"/>
+            <property name="lineWrappingIndentation" value="4"/>
+        </module>
+
+        <!-- 报告没有代码的文件 -->
+        <module name="NoCodeInFile"/>
+
+        <!-- 类文件名与类名一致 -->
+        <module name="OuterTypeFilename"/>
+
+        <!-- TODO 注释格式(// TODO(xxx): ) -->
+        <!-- <module name="TodoComment" /> -->
+
+        <!-- 禁止跟在代码语句后面的注释 -->
+        <module name="TrailingComment"/>
+
+        <!-- long 字面量需要使用 L 结尾 -->
+        <module name="UpperEll"/>
+
+        <!--endregion-->
+
+        <!--region 修饰符 Modifiers -->
+
+        <!-- 修饰符遵守 JLS 推荐的声明顺序 -->
+        <module name="ModifierOrder"/>
+
+        <!-- 报告多余的修饰符 -->
+        <module name="RedundantModifier"/>
+
+        <!--endregion-->
+
+        <!--region 命名规则 Naming Conventions -->
+
+        <!-- 名称中允许的连续大写字母数量，只能连续一个大写字母 -->
+        <!-- <module name="AbbreviationAsWordInName"> -->
+        <!--     <property name="allowedAbbreviationLength" value="1"/> -->
+        <!--     <property name="ignoreStatic" value="false"/> -->
+        <!--     <property name="ignoreFinal" value="false"/> -->
+        <!-- </module> -->
+
+        <!-- 抽象类命名必须以 Abstract 开头 -->
+        <!-- <module name="AbstractClassName"/> -->
+
+        <!-- 捕获的异常变量名，e/ex/t/e1/e2... -->
+        <module name="CatchParameterName">
+            <property name="format" value="^(e|t|ex|[a-z][a-zA-Z0-9]+)$"/>
+        </module>
+
+        <!-- 泛型参数类型名称，全大写字母 -->
+        <module name="ClassTypeParameterName">
+            <property name="format" value="^[A-Z]{1,}$"/>
+        </module>
+        <module name="InterfaceTypeParameterName">
+            <property name="format" value="^[A-Z]{1,}$"/>
+        </module>
+        <module name="MethodTypeParameterName">
+            <property name="format" value="^[A-Z]{1,}$"/>
+        </module>
+
+        <!-- 常量名称，全大写字母 -->
+        <module name="ConstantName"/>
+
+        <!-- lambda 参数名称，小写字母开头 -->
+        <module name="LambdaParameterName"/>
+
+        <!-- 变量名称，小写字母开头 -->
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+
+        <!-- 类成员属性名称，小写字母开头 -->
+        <module name="MemberName"/>
+
+        <!-- 方法名称，小写字母开头 -->
+        <module name="MethodName"/>
+
+        <!-- 包名，全小写字母 -->
+        <module name="PackageName">
+            <property name="format" value="^[a-z]+(\.[a-z][a-z0-9]*)*$"/>
+        </module>
+
+        <!-- 参数名称，小写字母开头 -->
+        <module name="ParameterName"/>
+
+        <!-- 静态属性名称，小写字母开头 -->
+        <module name="StaticVariableName"/>
+
+        <!-- 类名称，大写字母开头 -->
+        <module name="TypeName"/>
+
+        <!--endregion-->
+
+        <!--region 代码长度、数量相关 Size -->
+
+        <!-- 限制匿名内部类代码长度 -->
+        <module name="AnonInnerLength">
+            <property name="max" value="20"/>
+        </module>
+
+        <!-- 限制每个方法中语句数量 -->
+        <module name="ExecutableStatementCount">
+            <property name="max" value="60"/>
+        </module>
+
+        <!-- 限制 lambda 函数行数 -->
+        <module name="LambdaBodyLength">
+            <property name="max" value="30"/>
+        </module>
+
+        <!-- 限制每个类定义的方法数量 -->
+        <module name="MethodCount">
+            <property name="maxTotal" value="100"/>
+            <property name="maxPublic" value="100"/>
+        </module>
+
+        <!-- 限制每个方法的行数 -->
+        <module name="MethodLength">
+            <property name="max" value="200"/>
+        </module>
+
+        <!-- 限制一个文件只定义一个顶级类 -->
+        <module name="OuterTypeNumber"/>
+
+        <!-- 限制每个方法的参数数量 -->
+        <module name="ParameterNumber">
+            <property name="max" value="7"/>
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="ignoreOverriddenMethods" value="true"/>
+        </module>
+
+        <!--endregion-->
+
+        <!--region 空格 Whitespace -->
+
+        <!-- 不为 for 循环三要素为空的表达式留空格 -->
+        <module name="EmptyForInitializerPad">
+            <property name="option" value="nospace"/>
+        </module>
+        <module name="EmptyForIteratorPad">
+            <property name="option" value="nospace"/>
+        </module>
+
+        <!-- 类元素间的空行 -->
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+            <property name="allowMultipleEmptyLines" value="false"/>
+            <property name="allowMultipleEmptyLinesInsideClassMembers" value="false"/>
+        </module>
+
+        <!-- 泛型参数间空格 -->
+        <module name="GenericWhitespace"/>
+
+        <!-- 方法参数间空格 -->
+        <module name="MethodParamPad"/>
+
+        <!-- package 和 import 语句不断行 -->
+        <module name="NoLineWrap"/>
+
+        <!-- 限制空格 -->
+        <module name="NoWhitespaceAfter"/>
+        <module name="NoWhitespaceBefore">
+            <property name="allowLineBreaks" value="true"/>
+        </module>
+        <module name="WhitespaceAfter">
+            <property name="tokens"
+                      value="COMMA, SEMI, LITERAL_IF, LITERAL_ELSE, LITERAL_WHILE, LITERAL_DO, LITERAL_FOR, DO_WHILE"/>
+        </module>
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="false"/>
+            <property name="allowEmptyLambdas" value="false"/>
+            <property name="allowEmptyCatches" value="false"/>
+        </module>
+
+        <!-- 断行时，操作符应该在新行 -->
+        <module name="OperatorWrap"/>
+
+        <!-- 限制括号中的空格 -->
+        <module name="ParenPad"/>
+
+        <!-- 限制 token 之间只有一个空格 -->
+        <module name="SingleSpaceSeparator"/>
+
+        <!-- 限制强制类型转换空格 -->
+        <module name="TypecastParenPad"/>
+
+        <!--endregion-->
+
+    </module>
+</module>

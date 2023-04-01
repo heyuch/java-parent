@@ -1,0 +1,28 @@
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: io.github.heyuch.RewriteRules
+recipeList:
+  # 为子类覆盖的方法添加 @Override 注解
+  - org.openrewrite.java.cleanup.MissingOverrideAnnotation
+  # 为实现了 Serializable 接口的类添加 serialVersionUID 常量
+  - org.openrewrite.java.cleanup.AddSerialVersionUidToSerializable
+  # 调整类、方法定义的修饰符的顺序使其符合 Java 规范
+  - org.openrewrite.java.cleanup.ModifierOrder
+  # 移除内部枚举类的 static 修饰符（枚举类默认就是 static 的）
+  - org.openrewrite.java.cleanup.NestedEnumsAreNotStatic
+  # 修改 c 风格的数组声明形式为 Java 风格（int i[]; -> int[] i;）
+  - org.openrewrite.java.cleanup.UseJavaStyleArrayDeclarations
+  # 修改一行语句里多个变量声明为每行单独一条变量声明
+  - org.openrewrite.java.cleanup.MultipleVariableDeclarations
+  # 修改局部变量名为驼峰格式
+  - org.openrewrite.java.cleanup.RenameLocalVariablesToCamelCase
+  # 简化连续的赋值语句
+  - org.openrewrite.java.cleanup.SimplifyConsecutiveAssignments
+  # 将 long 字面量的后缀改为大写（1l -> 1L）
+  - org.openrewrite.java.cleanup.UpperCaseLiteralSuffixes
+  # 移除多余的括号
+  - org.openrewrite.java.cleanup.UnnecessaryParentheses
+  # for 循环统一使用 i++ 风格
+  - org.openrewrite.java.cleanup.ForLoopControlVariablePostfixOperators
+  # 移除未被使用到的 import 包语句
+  - org.openrewrite.java.RemoveUnusedImports
